@@ -1,0 +1,24 @@
+CREATE DATABASE web;
+USE web;
+
+CREATE TABLE users (
+     id INT NOT NULL AUTO_INCREMENT,
+     name CHAR(30) NOT NULL UNIQUE,
+     password CHAR(32) NOT NULL,
+     PRIMARY KEY (id)
+);
+
+CREATE TABLE images (
+    id INT NOT NULL AUTO_INCREMENT,
+    location CHAR(30) NOT NULL,
+    fk_user_id INT,
+    PRIMARY KEY (id),
+    INDEX u_id (fk_user_id),
+    FOREIGN KEY (fk_user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
+CREATE USER 'web'@'%' IDENTIFIED BY 'webapp456--secure';
+GRANT ALL ON *.* TO 'web'@'%';
+flush privileges;
